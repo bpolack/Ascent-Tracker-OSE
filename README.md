@@ -3,6 +3,7 @@ A simple web app for saving code snippets to reuse easily. React / Express / Mon
 
 ## Purpose
 A bit of quick practice using React. Segregating frontend & backend in this project to start a good habit. Will be using [npm concurrently](https://www.npmjs.com/package/concurrently) configured to start both backend and frontend at the same time.
+https://stackoverflow.com/questions/51126472/how-to-organise-file-structure-of-backend-and-frontend-in-mern
 
 ## Roadmap
 
