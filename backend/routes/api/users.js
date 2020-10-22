@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const { check, validationResult } = require('express-validator');
 
+const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 
 // @route   POST api/users
-// @desc    Register a new user
+// @desc    Register a new user, requires a firstname, lastname, email, and valid password
 // @access  Public
 router.post('/', [
     check('fname', 'First name is required')
@@ -39,7 +42,6 @@ async (req, res) => {
         }
 
         const salt = await bcrypt.genSalt(12);
-
         // Create new user with bcrypt hashed password
         user = new User({
             email: email,
@@ -49,15 +51,38 @@ async (req, res) => {
         });
         await user.save();
 
-        // Return JSON Web Token
-
-        res.send('User registered');
+        // Return JSON Web Token payload
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+        jwt.sign(payload, process.env.SESSION_SECRET, {
+            expiresIn: 3600
+        },
+        (err, token) => {
+            if (err) {
+                throw err;
+            }
+            res.json({ token });
+        });
     }
     catch(err) {
         console.error("User Post Err - " + err.message);
         return res.status(500).send('Server error');
     }
-    
+});
+
+// @route   GET api/users
+// @desc    Get the currently authorized user's information
+// @access  Private
+router.get('/', auth, (req, res) => {
+    try {
+        
+    }
+    catch(err) {
+
+    }
 });
 
 module.exports = router;
