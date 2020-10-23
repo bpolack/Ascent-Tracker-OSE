@@ -58,7 +58,7 @@ async (req, res) => {
             }
         };
         jwt.sign(payload, process.env.SESSION_SECRET, {
-            expiresIn: 3600
+            expiresIn: process.env.SESSION_EXPIRY
         },
         (err, token) => {
             if (err) {
@@ -73,15 +73,72 @@ async (req, res) => {
     }
 });
 
+// @route   POST api/users/login
+// @desc    Authenticate a user to get auth token
+// @access  Public
+router.post('/login', [
+    check('email', 'Email is required')
+        .not()
+        .isEmpty(),
+    check('password', 'Password is required')
+        .not()
+        .isEmpty(),
+], 
+async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+
+    try {
+        // Check that user exists
+        let user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+        }
+
+        // Check the password using bcrypt
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch) {
+            return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+        }
+
+        // Return JSON Web Token payload
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+        jwt.sign(payload, process.env.SESSION_SECRET, {
+            expiresIn: process.env.SESSION_EXPIRY
+        },
+        (err, token) => {
+            if (err) {
+                throw err;
+            }
+            res.json({ token });
+        });
+    }
+    catch(err) {
+        console.error("User Login Err - " + err.message);
+        return res.status(500).send('Server error');
+    }
+});
+
 // @route   GET api/users
 // @desc    Get the currently authorized user's information
 // @access  Private
-router.get('/', auth, (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
-        
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
     }
     catch(err) {
-
+        console.error("User Fetch Err - " + err.message);
+        return res.status(500).send('Server error');
     }
 });
 
