@@ -8,7 +8,8 @@ const SnippetSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: true
+        required: true,
+        index: true
     },
     desc: {
         type: String
@@ -27,5 +28,6 @@ const SnippetSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+SnippetSchema.index({name: 'text', desc: 'text'});
 
 module.exports = Snippet = mongoose.model('snippet', SnippetSchema);

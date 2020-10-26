@@ -24,6 +24,24 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+// @route   GET api/snippets/search/keywords
+// @desc    Search & fetch all of a users snippets according to provided keywords
+// @access  Private
+router.get('/search/:keywords', auth, async (req, res) => {
+    try {
+        const snippets = await Snippet.find({ user: req.user.id, $text: {$search: req.params.keywords} });
+
+        if (!snippets || snippets.length < 1) {
+            return res.status(400).json({ errors: [{ msg: 'No snippets found' }] });
+        }
+        res.json(snippets);
+    }
+    catch(err) {
+        console.error("Snippet Fetch Err - " + err.message);
+        return res.status(500).send('Server error');
+    }
+});
+
 // @route   GET api/snippets/id
 // @desc    Fetch a snippet by id
 // @access  Private
