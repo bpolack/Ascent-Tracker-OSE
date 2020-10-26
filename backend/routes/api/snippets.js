@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
 const auth = require('../../middleware/auth');
-const User = require('../../models/User');
+//const User = require('../../models/User');
 const Snippet = require('../../models/Snippet');
 
 // @route   GET api/snippets
@@ -13,10 +13,34 @@ router.get('/', auth, async (req, res) => {
     try {
         const snippets = await Snippet.find({ user: req.user.id });
 
-        if (!snippets) {
+        if (!snippets || snippets.length < 1) {
             return res.status(400).json({ errors: [{ msg: 'No snippets added yet' }] });
         }
         res.json(snippets);
+    }
+    catch(err) {
+        console.error("Snippet Fetch Err - " + err.message);
+        return res.status(500).send('Server error');
+    }
+});
+
+// @route   GET api/snippets/id
+// @desc    Fetch a snippet by id
+// @access  Private
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const snippet = await Snippet.findById(req.params.id);
+
+        if (!snippet) {
+            return res.status(400).json({ errors: [{ msg: 'Snippet does not exist' }] });
+        }
+
+        // Check that the snippet belongs to the authorized user
+        if (snippet.user != req.user.id) {
+            return res.status(400).json({ errors: [{ msg: 'Not authorized to access this resource' }] });
+        }
+
+        res.json(snippet);
     }
     catch(err) {
         console.error("Snippet Fetch Err - " + err.message);
@@ -50,30 +74,57 @@ async (req, res) => {
         if (desc) snippetFields.desc = desc; 
         if (code) snippetFields.code = code;
 
+        let snippet;
+
         // If id is present, attempt update 
         if (id) {
-            let snippet = await Snippet.findById(id);
+            snippet = await Snippet.findById(id);
 
             if (snippet) {
+                // Check that the snippet belongs to the authorized user
+                if (snippet.user != req.user.id) {
+                    return res.status(400).json({ errors: [{ msg: 'Not authorized to access this resource' }] });
+                }
+
                 // Update the existing snippet
+                snippetFields.dateMod = Date.now();
+                console.log(snippetFields.dateMod);
                 snippet = await Snippet.findByIdAndUpdate( 
                     id, 
                     { $set: snippetFields }, 
                     { new: true }
                 );
 
-                res.json(snippet);
+                return res.json(snippet);
             }
         }
         
         // Otherwise create new snippet
-        let snippet = new Snippet(snippetFields);
+        snippet = new Snippet(snippetFields);
         await snippet.save();
 
         res.json(snippet);
     }
     catch(err) {
         console.error("Snippet Post Err - " + err.message);
+        return res.status(500).send('Server error');
+    }
+});
+
+// @route   DELETE api/snippets/id
+// @desc    Delete a snippet by id
+// @access  Private
+router.delete(`/:id`, auth, async (req, res) => {
+    try {
+        let snippet = await Snippet.findOneAndDelete( { _id: req.params.id, user: req.user.id } );
+        // Check that the snippet exists and belongs to the authorized user
+        if (!snippet) {
+            return res.status(400).json({ errors: [{ msg: 'Snippet does not exist for current user' }] });
+        }
+        res.json(snippet);
+    }
+    catch(err) {
+        console.error("Snippet Delete Err - " + err.message);
         return res.status(500).send('Server error');
     }
 });
