@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alert';
+import PropTypes from 'prop-types';
 
 // Bootstrap Components
 import Form from 'react-bootstrap/Form';
@@ -19,11 +22,13 @@ export class RegisterForm extends Component {
 	}
 
 	handleSubmit(event) {
-		console.log('FName was submitted: ' + this.state.firstName);
-		console.log('LName was submitted: ' + this.state.lastName);
-		console.log('Email was submitted: ' + this.state.email);
-		console.log('Password was submitted: ' + this.state.password);
 		event.preventDefault();
+		if (this.state.password !== this.state.password2) {
+			this.props.setAlert('Passwords do not match', 'error');
+		}
+		else {
+
+		}
 	}
 
 	render() {
@@ -46,7 +51,14 @@ export class RegisterForm extends Component {
 					<Form.Control type="password" name="password" onChange={this.handleChange} required />
 					<Form.Text id="passwordHelpBlock" muted>
 						Password must be at least 8 characters long, and contain at least one number or symbol.
-									</Form.Text>
+					</Form.Text>
+				</Form.Group>
+				<Form.Group controlId="registerPassword2">
+					<Form.Label>Confirm Password</Form.Label>
+					<Form.Control type="password" name="password2" onChange={this.handleChange} required />
+					<Form.Text id="passwordHelpBlock" muted>
+						Confirm your password, by entering it a second time
+					</Form.Text>
 				</Form.Group>
 				<Button className="px-4" variant="success" type="submit">Sign Up</Button>
 			</Form>
@@ -54,4 +66,8 @@ export class RegisterForm extends Component {
 	}
 }
 
-export default RegisterForm
+RegisterForm.propTypes = {
+	setAlert: PropTypes.func.isRequired
+}
+
+export default connect(null, { setAlert })(RegisterForm)

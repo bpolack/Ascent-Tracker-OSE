@@ -4,6 +4,7 @@ import './App.css'; // Global app styles
 
 // Import Required Components
 import Header from './layout/Header/Header';
+import AlertContainer from './misc/AlertContainer/AlertContainer';
 import Footer from './layout/Footer/Footer';
 import Landing from './pages/Landing/Landing';
 import Login from './pages/Login/Login';
@@ -24,6 +25,7 @@ const App = () => {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 					</Switch>
+					<AlertContainer />
 					<Footer />
 				</div>
 			</Router>

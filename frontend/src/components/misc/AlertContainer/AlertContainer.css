@@ -1,0 +1,6 @@
+.AlertContainer {
+	position: fixed;
+	max-width: 350px;
+	bottom: 60px;
+	right: 40px;
+}

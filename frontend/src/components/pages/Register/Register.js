@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 // Import Required Components
 import FullCentered from '../../layout/FullCentered/FullCentered';
