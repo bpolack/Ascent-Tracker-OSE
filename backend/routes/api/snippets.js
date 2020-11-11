@@ -3,7 +3,6 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
 const auth = require('../../middleware/auth');
-//const User = require('../../models/User');
 const Snippet = require('../../models/Snippet');
 
 // @route   GET api/snippets
@@ -25,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route   GET api/snippets/search/keywords
-// @desc    Search & fetch all of a users snippets according to provided keywords
+// @desc    Search & fetch all of a users snippets according to provided keywords, ensure your search keywords are properly url encoded
 // @access  Private
 router.get('/search/:keywords', auth, async (req, res) => {
     try {
@@ -43,7 +42,7 @@ router.get('/search/:keywords', auth, async (req, res) => {
 });
 
 // @route   GET api/snippets/id
-// @desc    Fetch a snippet by id
+// @desc    Fetch a single snippet by id
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
     try {
@@ -67,7 +66,7 @@ router.get('/:id', auth, async (req, res) => {
 });
 
 // @route   POST api/snippets
-// @desc    Create or update a snippet
+// @desc    Create or update a snippet, technically any escaped code will be valid for use as a snippet
 // @access  Private
 router.post('/', [ auth, [
     check('name', 'Snippet name is required')
