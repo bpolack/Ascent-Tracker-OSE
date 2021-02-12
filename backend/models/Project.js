@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const SnippetSchema = new mongoose.Schema({
+const ProjectSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -14,9 +14,6 @@ const SnippetSchema = new mongoose.Schema({
 	desc: {
 		type: String
 	},
-	code: {
-		type: String
-	},
 	dateMod: {
 		type: Date,
 		required: true,
@@ -28,6 +25,6 @@ const SnippetSchema = new mongoose.Schema({
 		default: Date.now
 	}
 });
-SnippetSchema.index({ name: 'text', desc: 'text' });
+ProjectSchema.index({ name: 'text', desc: 'text' });
 
-module.exports = Snippet = mongoose.model('snippet', SnippetSchema);
+module.exports = Project = mongoose.model('project', ProjectSchema);

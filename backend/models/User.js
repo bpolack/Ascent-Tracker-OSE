@@ -18,6 +18,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userGroup: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'userGroup',
+		required: false,
+		index: true
+	},
     dateMod: {
         type: Date,
         required: true,

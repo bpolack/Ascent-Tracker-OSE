@@ -1,7 +1,7 @@
 {
-  "name": "snippet-storage-backend",
+  "name": "ascent-tracker-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend REST API for the time tracker.",
   "main": "app.js",
   "scripts": {
     "start": "node app",
