@@ -14,7 +14,8 @@ For ease of testing, use [npm concurrently](https://www.npmjs.com/package/concur
 
 1. Determine REST API routes required for backend :white_check_mark:
 2. Configure routes and middleware needed for user registration and auth :white_check_mark:
-3. tbd
+3. Configure routes for handling project management and adding / viewing time chunks :white_check_mark:
+4. Run unit tests on each route, and on middleware functions independently
 
 ### Frontend
 
