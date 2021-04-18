@@ -1,36 +1,20 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'; // Global app styles
-
-// Import Required Components
-import Header from './layout/Header/Header';
-import AlertContainer from './misc/AlertContainer/AlertContainer';
-import Footer from './layout/Footer/Footer';
-import Landing from './pages/Landing/Landing';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-
-// Redux
+// Redux & Redux Persist
 import { Provider } from 'react-redux';
-import store from '../store';
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from '../store';
+
+// Import Main App Component
+import AppRoot from './AppRoot';
 
 const App = () => {
+
 	return (
 		<Provider store={store}>
-			<Router>
-				<div className="App">
-					<Header />
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/register" component={Register} />
-					</Switch>
-					<AlertContainer />
-					<Footer />
-				</div>
-			</Router>
+			<PersistGate loading={null} persistor={persistor}>
+				<AppRoot />
+			</PersistGate>
 		</Provider>
 	);
 }
 
-export default App;
+export default App

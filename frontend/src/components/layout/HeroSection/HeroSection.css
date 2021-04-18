@@ -1,0 +1,13 @@
+.HeroSectionContainer {
+	width: 100%;
+	min-height: calc(100vh - 110px);
+	padding: 50px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.HeroContents {
+	max-width: 660px;
+	padding: 40px 30px;
+	border-radius: 8px;
+}

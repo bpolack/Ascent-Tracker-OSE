@@ -60,7 +60,7 @@ export class RegisterForm extends Component {
 						Confirm your password, by entering it a second time
 					</Form.Text>
 				</Form.Group>
-				<Button className="px-4" variant="success" type="submit">Sign Up</Button>
+				<Button className="px-4" variant="primary" type="submit">Sign Up</Button>
 			</Form>
 		)
 	}

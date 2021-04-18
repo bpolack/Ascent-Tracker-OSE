@@ -140,6 +140,9 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/', [ auth, [
     check('name', 'Time name is required')
         .not()
+        .isEmpty(),
+    check('startDate', 'Time start is required')
+        .not()
         .isEmpty()
 ] ], 
 async (req, res) => {
