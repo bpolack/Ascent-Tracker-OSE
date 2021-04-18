@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import './Landing.css';
 
 // Import Required Components
-import FullCentered from '../../layout/FullCentered/FullCentered';
-import InlineBackgroundImage from '../../misc/InlineBackgroundImage/InlineBackgroundImage';
-import backgroundImg from '../../../images/snippet-main-bg.jpg';
+import HeroSection from '../../layout/HeroSection/HeroSection';
 
 // Bootstrap Components
 import Container from 'react-bootstrap/Container';
@@ -15,18 +13,17 @@ import Button from 'react-bootstrap/Button';
 export class Landing extends Component {
 	render() {
 		return (
-			<Container className="LandingBackground" fluid>
-				<InlineBackgroundImage image={backgroundImg} desc="Code Snippet Laptop Background Image" />
+			<Container fluid>
 				<Row>
 					<Col>
-						<FullCentered>
-							<h1 className="LightHeading text-center">InfinuSnip</h1>
-							<h4 className="LightHeading text-center mb-4">Create and Save Your Code Snippets For Easy Access</h4>
+						<HeroSection>
+							<h1 className="LightHeading text-center">Ascent Tracker</h1>
+							<h4 className="LightHeading text-center mb-4">Easily track time, and better manage your projects.</h4>
 							<div className="text-center">
 								<Button href="/register/" className="mx-2 px-4" variant="light">Sign Up</Button>{' '}
-								<Button href="/login/" className="mx-2 px-4" variant="success">Login</Button>
+								<Button href="/login/" className="mx-2 px-4" variant="primary">Login</Button>
 							</div>
-						</FullCentered>
+						</HeroSection>
 					</Col>
 				</Row>
 			</Container>

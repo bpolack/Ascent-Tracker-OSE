@@ -5,8 +5,11 @@ React / Redux / Express / MongoDB
 ## Description
 Simple time tracking for small teams. Keep better track of your time and budgets for collaborative projects.
 
-## Testing
-For ease of testing, use [npm concurrently](https://www.npmjs.com/package/concurrently) configured to start both backend and frontend at the same time.
+## Run in Dev Mode
+To easily run the project in dev, use [npm concurrently](https://www.npmjs.com/package/concurrently) configured to start both backend and frontend at the same time.
+
+## Steps to Publish
+TBD
 
 ## Roadmap
 

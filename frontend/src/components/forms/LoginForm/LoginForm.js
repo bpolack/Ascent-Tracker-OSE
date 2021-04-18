@@ -36,7 +36,7 @@ export class LoginForm extends Component {
 					<Form.Label>Password</Form.Label>
 					<Form.Control type="password" name="password" onChange={this.handleChange} required />
 				</Form.Group>
-				<Button className="px-4" variant="success" type="submit">Login</Button>
+				<Button className="px-4" variant="primary" type="submit">Login</Button>
 			</Form>
 		)
 	}
