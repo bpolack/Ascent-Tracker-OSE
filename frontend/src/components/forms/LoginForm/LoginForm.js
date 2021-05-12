@@ -1,12 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../../../actions/authentication';
+import PropTypes from 'prop-types';
 
-// Bootstrap Components
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 
 export class LoginForm extends Component {
 	constructor(props) {
 		super(props);
+
+		// Initial state
+		this.state = {
+			email: '',
+			password: ''
+		}
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -19,27 +27,45 @@ export class LoginForm extends Component {
 	}
 
 	handleSubmit(event) {
-		console.log('Email was submitted: ' + this.state.email);
-		console.log('Password was submitted: ' + this.state.password);
+		const { email, password } = this.state;
+
 		event.preventDefault();
+		this.props.login(email, password);
 	}
 
 	render() {
-		return (
-			<Form onSubmit={this.handleSubmit}>
-				<Form.Group controlId="loginEmail">
-					<Form.Label>Email Address</Form.Label>
-					<Form.Control type="email" name="email" onChange={this.handleChange} placeholder="hello@world.ca" required />
-				</Form.Group>
 
-				<Form.Group controlId="loginPassword">
-					<Form.Label>Password</Form.Label>
-					<Form.Control type="password" name="password" onChange={this.handleChange} required />
-				</Form.Group>
-				<Button className="px-4" variant="primary" type="submit">Login</Button>
-			</Form>
+		const { isAuthenticated } = this.props;
+
+		if (isAuthenticated) {
+			return <Redirect to="/track" />;
+		}
+
+		return (
+			<form onSubmit={this.handleSubmit}>
+				<label className="block mb-3">
+					<span className="text-ascent-std">Email Address</span>
+					<input type="email" name="email" onChange={this.handleChange} placeholder="hello@world.ca" className="form-ascent" required />
+				</label>
+
+				<label className="block mb-3">
+					<span className="text-ascent-std">Password</span>
+					<input type="password" name="password" onChange={this.handleChange} className="form-ascent" required />
+				</label>
+				<input className="cursor-pointer leading-none mx-2 px-5 py-3 font-semibold transition-colors rounded-full text-white bg-indigo-500 hover:bg-pink-500" type="submit" value="Login" />
+			</form>
 		)
 	}
 }
 
-export default LoginForm
+LoginForm.propTypes = {
+	login: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+	isAuthenticated: state.authentication.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(LoginForm)
+

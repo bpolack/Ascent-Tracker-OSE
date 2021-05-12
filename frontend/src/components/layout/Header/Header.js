@@ -1,90 +1,127 @@
 import React, { Component } from 'react'
+//import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setFocus } from '../../../actions/focus';
+import { logout } from '../../../actions/authentication';
 import PropTypes from 'prop-types';
-import './Header.css';
+import { Transition } from "@headlessui/react";
 
-// Bootstrap Components
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
+// Import Components
+import PillButton from '../../elements/PillButton/PillButton';
 
 // Fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaptopCode } from '@fortawesome/free-solid-svg-icons';
 
-// Other Components
-import Toggle from 'react-toggle';
-import "react-toggle/style.css";
-
 export class Header extends Component {
 
 	constructor(props) {
 		super(props);
-		this.handleFocus = this.handleFocus.bind(this);
+		this.state = {
+			mobileNavOpen: false
+		};
+
+		this.handleLogout = this.handleLogout.bind(this);
+		this.toggleMobileNav = this.toggleMobileNav.bind(this);
+		this.renderLogin = this.renderLogin.bind(this);
 	}
 
-	handleFocus(event) {
-		// do something with event.target.checked
-		this.props.setFocus(event.target.checked);
+	handleLogout(event) {
+		event.preventDefault();
+		// Log out and deauthenticate the current user
+		this.props.logout();
+	}
+
+	toggleMobileNav() {
+		this.setState(prevState => ({
+			mobileNavOpen: !prevState.mobileNavOpen
+		}));
+	}
+
+	renderProfile() {
+		const { isAuthenticated } = this.props;
+
+		if (isAuthenticated) {
+			return (
+				<a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Profile</a>
+			)
+		}
+	}
+
+	renderLogin() {
+		const { isAuthenticated } = this.props;
+
+		if (isAuthenticated) {
+			return (
+				<PillButton buttonClickEvent={this.handleLogout} varient="dark">Logout</PillButton>
+			)
+		}
+		else {
+			return (
+				<PillButton link="/login/" varient="color">Login</PillButton>
+			)
+		}
 	}
 
 	render() {
-
-		const { focus } = this.props;
-
-		let navStyle = "light";
-		if (focus) {
-			navStyle = "dark";
-		}
+		const { mobileNavOpen } = this.state;
 
 		return (
-			<header className="GlassBackground">
-				<div className="FocusToggleContainer GlassBackground">
-					<label>
-						<Toggle
-							icons={false}
-							className='FocusToggle'
-							defaultChecked={focus}
-							onChange={this.handleFocus} />
-						<span>Focus Mode</span>
-					</label>
-				</div>
-				<Navbar variant={navStyle} expand="lg">
-					<Navbar.Brand href="/">
-						<FontAwesomeIcon className="mr-3" icon={faLaptopCode} />
-      					Ascent Tracker
-					</Navbar.Brand>
-					<Navbar.Toggle aria-controls="ascent-navbar-nav" />
-					<Navbar.Collapse id="ascent-navbar-nav">
-						<Nav className="ml-auto">
-							<Nav.Link href="#">Documentation</Nav.Link>
-							<NavDropdown title="Projects" id="project-nav-dropdown">
-								<NavDropdown.Item href="#">Manage Projects</NavDropdown.Item>
-								<NavDropdown.Item href="#">New Project</NavDropdown.Item>
-							</NavDropdown>
-							<NavDropdown title="Time" id="time-nav-dropdown">
-								<NavDropdown.Item href="#">Manage Time</NavDropdown.Item>
-								<NavDropdown.Item href="#">Track Time</NavDropdown.Item>
-							</NavDropdown>
-							<Button variant="dark" className="my-2 my-lg-0 mx-lg-2" href="/register/">Register</Button>
-							<Button href="/login/">Login</Button>
-						</Nav>
-					</Navbar.Collapse>
-				</Navbar>
+			<header className="bg-ascent-std relative z-10">
+				<nav className="flex items-center justify-between flex-wrap p-6">
+					<div className="flex items-center flex-no-shrink text-ascent-std mr-6">
+						<a href="/">
+							<FontAwesomeIcon icon={faLaptopCode} />
+							<span className="font-semibold text-xl ml-2 tracking-tight">Ascent Tracker</span>
+						</a>
+					</div>
+					<div className="block lg:hidden" >
+						<button onClick={this.toggleMobileNav} className="flex items-center px-3 py-3 border rounded-full border-gray-800 text-gray-800 dark:bg-white dark:text-white dark:border-white outline-none focus:outline-none">
+							<svg className="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+						</button>
+					</div>
+					<div className="w-full flex-grow hidden lg:flex lg:items-center lg:justify-end lg:w-auto">
+						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
+						{this.renderProfile()}
+						<a href="/track" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Track</a>
+						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Projects</a>
+						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-6">Time</a>
+						{this.renderLogin()}
+					</div>
+					<Transition
+						show={mobileNavOpen}
+						enter="transition-opacity duration-150"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="transition-opacity duration-250"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+						className="w-full"
+					>
+						<div className="block lg:hidden">
+							<div className="block my-6 -mx-2" >
+								{this.renderLogin()}
+							</div>
+							<a href="#responsive-header" className="block my-6 text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
+							{this.renderProfile()}
+							<a href="#responsive-header" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Projects</a>
+							<a href="#responsive-header" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Time</a>
+						</div>
+					</Transition>
+				</nav>
 			</header>
 		)
 	}
 }
 
 Header.propTypes = {
-	setFocus: PropTypes.func.isRequired,
-	focus: PropTypes.bool.isRequired
+	logout: PropTypes.func.isRequired,
+	focus: PropTypes.bool.isRequired,
+	isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
-	focus: state.focus
+	focus: state.focus,
+	isAuthenticated: state.authentication.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setFocus })(Header)
+export default connect(mapStateToProps, { logout })(Header)

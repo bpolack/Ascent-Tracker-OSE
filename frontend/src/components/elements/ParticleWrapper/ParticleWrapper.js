@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './ParticleWrapper.css';
 
 // Import Library Components
 import Particles from 'react-particles-js';
@@ -11,7 +10,7 @@ export class ParticleWrapper extends Component {
 	renderParticles(hidden) {
 		if (!hidden) {
 			return (
-				<Particles
+				<Particles className="h-full"
 					params={{
 						"fps_limit": 30,
 						"particles": {
@@ -58,7 +57,7 @@ export class ParticleWrapper extends Component {
 		const { focus } = this.props;
 
 		return (
-			<div className="ParticleWrapper">
+			<div className="absolute inset-0">
 				{this.renderParticles(focus)}
 			</div>
 		)

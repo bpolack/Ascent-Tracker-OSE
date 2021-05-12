@@ -3,13 +3,12 @@ import './HeroSection.css';
 
 export class HeroSection extends Component {
 	render() {
-		let boxClass = "HeroContents ";
-		if (this.props.boxType) {
-			boxClass += this.props.boxType;
-		}
+		
+		const {filled} = this.props;
+
 		return (
-			<div className="HeroSectionContainer">
-				<div className={boxClass}>
+			<div className="hero-container-screen py-20 flex items-center justify-center">
+				<div className={`${filled ? 'bg-ascent-std' : ''} max-w-680 px-7 py-9 rounded-lg`}>
 					{this.props.children}
 				</div>
 			</div>

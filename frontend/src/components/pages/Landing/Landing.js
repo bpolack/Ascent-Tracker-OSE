@@ -1,32 +1,22 @@
 import React, { Component } from 'react'
-import './Landing.css';
 
 // Import Required Components
 import HeroSection from '../../layout/HeroSection/HeroSection';
-
-// Bootstrap Components
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import PillButton from '../../elements/PillButton/PillButton';
 
 export class Landing extends Component {
 	render() {
 		return (
-			<Container fluid>
-				<Row>
-					<Col>
-						<HeroSection>
-							<h1 className="LightHeading text-center">Ascent Tracker</h1>
-							<h4 className="LightHeading text-center mb-4">Easily track time, and better manage your projects.</h4>
-							<div className="text-center">
-								<Button href="/register/" className="mx-2 px-4" variant="light">Sign Up</Button>{' '}
-								<Button href="/login/" className="mx-2 px-4" variant="primary">Login</Button>
-							</div>
-						</HeroSection>
-					</Col>
-				</Row>
-			</Container>
+			<div>
+				<HeroSection>
+					<h1 className="heading-ascent-1 text-white text-center mb-1">Ascent Tracker</h1>
+					<p className="heading-ascent-3 text-white text-center mb-6">Easily track time, and better manage your projects.</p>
+					<div className="text-center">
+						<PillButton link="/register/" varient="color">Sign Up</PillButton>
+						<PillButton link="/login/" varient="light">Login</PillButton>
+					</div>
+				</HeroSection>
+			</div>
 		)
 	}
 }
