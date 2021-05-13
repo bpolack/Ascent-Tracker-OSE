@@ -1,5 +1,11 @@
 import React, { Fragment, Component } from 'react'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Dialog, Transition } from "@headlessui/react";
+
+// Fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export class Popup extends Component {
 
@@ -11,7 +17,7 @@ export class Popup extends Component {
 			<Transition show={open} as={Fragment}>
 				<Dialog
 					as="div"
-					className="fixed inset-0 z-10 overflow-y-auto"
+					className={`${this.props.focus ? 'dark' : '' } fixed inset-0 z-40 overflow-y-auto`}
 					static
 					open={open}
 					onClose={closeModal}
@@ -26,7 +32,7 @@ export class Popup extends Component {
 							leaveFrom="opacity-100"
 							leaveTo="opacity-0"
 						>
-							<Dialog.Overlay className="fixed inset-0" />
+							<Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur-sm" />
 						</Transition.Child>
 
 						{/* This element is to trick the browser into centering the modal contents. */}
@@ -45,10 +51,10 @@ export class Popup extends Component {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95"
 						>
-							<div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+							<div className="relative bg-ascent-std text-ascent-std inline-block shadow-lg w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform rounded-xl border-solid border-transparent dark:border-white dark:border-opacity-30 border-t border-b">
 								<Dialog.Title
 									as="h3"
-									className="text-lg font-medium leading-6 text-gray-900"
+									className="text-xl font-medium mb-4 leading-6"
 								>
 									{this.props.title}
                 				</Dialog.Title>
@@ -56,15 +62,9 @@ export class Popup extends Component {
 									{this.props.children}
 								</div>
 
-								<div className="mt-4">
-									<button
-										type="button"
-										className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-										onClick={closeModal}
-									>
-										Got it, thanks!
-                  					</button>
-								</div>
+								<button onClick={closeModal} className="absolute top-0 right-0 py-3 px-4 text-gray-800 dark:text-white hover:text-pink-500 dark:hover:text-pink-500 focus:outline-none">
+									<FontAwesomeIcon icon={faTimes} />
+								</button>
 							</div>
 						</Transition.Child>
 					</div>
@@ -74,4 +74,12 @@ export class Popup extends Component {
 	}
 }
 
-export default Popup
+Popup.propTypes = {
+	focus: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = state => ({
+	focus: state.focus
+});
+
+export default connect(mapStateToProps)(Popup)

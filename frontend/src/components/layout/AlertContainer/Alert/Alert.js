@@ -56,7 +56,7 @@ export class Alert extends Component {
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 			>
-				<div className="w-full relative bg-ascent-std text-ascent-std px-3 py-2 mt-2 rounded-md shadow-sm">
+				<div className="w-full relative bg-ascent-std text-ascent-std px-3 py-2 mt-2 rounded-md shadow-lg border-solid border-transparent dark:border-white dark:border-opacity-30 border-t border-b">
 					<div>
 						<span className={`inline-block ${alertColor} w-3 h-3 rounded-full mr-2`}></span>
 						<strong><span>{this.props.alertType}</span></strong>

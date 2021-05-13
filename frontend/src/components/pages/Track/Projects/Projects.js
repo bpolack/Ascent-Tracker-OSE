@@ -10,6 +10,7 @@ import ProjectCard from './ProjectCard/ProjectCard';
 import PageSection from '../../../layout/PageSection/PageSection';
 import PillButton from '../../../elements/PillButton/PillButton';
 import Popup from '../../../elements/Popup/Popup';
+import ProjectForm from '../../../forms/ProjectForm/ProjectForm';
 
 export class Projects extends Component {
 
@@ -53,9 +54,9 @@ export class Projects extends Component {
 	renderProjects() {
 		const { projects, error } = this.props.project;
 
-		if (projects && projects.length > 1) {
+		if (projects && projects.length > 0) {
 			return (
-				<div>
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 					{projects.map((project) => (
 						<ProjectCard key={project._id} project={project} />
 					))}
@@ -79,12 +80,12 @@ export class Projects extends Component {
 
 		return (
 			<PageSection filled={true} fullWidth={false}>
-				<div className="flex flex-wrap items-start justify-between">
+				<div className="flex flex-wrap items-start justify-between mb-2">
 					<h1 className="heading-ascent-2 mr-4">Your Projects</h1>
 					<PillButton buttonClickEvent={this.openNewModal} varient="color">Create Project</PillButton>
 				</div>
 				<Popup title="Create New Project" open={this.state.newModalShowing} closeModal={this.closeNewModal}>
-					<h2>HEllo World</h2>
+					<ProjectForm closeModal={this.closeNewModal} />
 				</Popup>
 				{
 					loading ? (

@@ -13,8 +13,6 @@ export const getProjects = () => async dispatch => {
 		});
 	} catch (err) {
 
-		console.log(err.response);
-
 		dispatch({
 			type: PROJECT_ERROR,
 			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }

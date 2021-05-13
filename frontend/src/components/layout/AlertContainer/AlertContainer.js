@@ -12,7 +12,7 @@ export class AlertContainer extends Component {
 
 		if (alerts && alerts.length > 0) {
 			return (
-				<div className="fixed bottom-5 right-5 w-full max-w-xs max-h-64">
+				<div className="fixed z-50 bottom-5 right-5 w-full max-w-xs max-h-64">
 					{alerts.map(alert => <Alert key={alert.id} alertId={alert.id} alertType={alert.alertType} msg={alert.msg} />)}
 				</div>
 			)

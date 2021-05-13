@@ -83,8 +83,8 @@ export class Header extends Component {
 						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
 						{this.renderProfile()}
 						<a href="/track" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Track</a>
-						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Projects</a>
-						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-6">Time</a>
+						<a href="/track/projects" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-5">Projects</a>
+						<a href="/track/time" className="block mt-4 lg:inline-block lg:mt-0 text-ascent-std hover:text-pink-500 mr-6">Time</a>
 						{this.renderLogin()}
 					</div>
 					<Transition
@@ -103,8 +103,8 @@ export class Header extends Component {
 							</div>
 							<a href="#responsive-header" className="block my-6 text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
 							{this.renderProfile()}
-							<a href="#responsive-header" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Projects</a>
-							<a href="#responsive-header" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Time</a>
+							<a href="/track/projects" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Projects</a>
+							<a href="/track/time" className="block mt-6 text-ascent-std hover:text-pink-500 mr-5">Track Time</a>
 						</div>
 					</Transition>
 				</nav>
