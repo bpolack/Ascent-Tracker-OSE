@@ -9,7 +9,6 @@ import PillButton from '../../elements/PillButton/PillButton';
 export class Track extends Component {
 
 	render() {
-
 		return (
 			<div>
 				<HeroSection>

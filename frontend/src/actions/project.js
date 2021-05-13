@@ -12,9 +12,12 @@ export const getProjects = () => async dispatch => {
 			payload: res.data
 		});
 	} catch (err) {
+
+		console.log(err.response);
+
 		dispatch({
 			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status }
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
 		});
 	}
 };
@@ -31,7 +34,7 @@ export const getProject = id => async dispatch => {
 	} catch (err) {
 		dispatch({
 			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status }
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
 		});
 	}
 };
@@ -50,7 +53,7 @@ export const addProject = formData => async dispatch => {
 	} catch (err) {
 		dispatch({
 			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status }
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
 		});
 	}
 };
@@ -69,7 +72,7 @@ export const updateProject = formData => async dispatch => {
 	} catch (err) {
 		dispatch({
 			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status }
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
 		});
 	}
 };
@@ -88,7 +91,7 @@ export const deleteProject = id => async dispatch => {
 	} catch (err) {
 		dispatch({
 			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status }
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
 		});
 	}
 };

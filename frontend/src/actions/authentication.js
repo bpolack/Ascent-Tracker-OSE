@@ -47,7 +47,6 @@ export const getUser = () => async dispatch => {
 		});
 	}
 	catch (err) {
-		console.log(err.response);
 
 		dispatch({
 			type: AUTH_ERROR

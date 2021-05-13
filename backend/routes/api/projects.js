@@ -23,7 +23,12 @@ router.get('/', auth, async (req, res) => {
         }
 
         if (!projects || projects.length < 1) {
-            return res.status(400).json({ errors: [{ msg: 'No projects found' }] });
+            if (keywords) {
+                return res.status(400).json({ errors: [{ msg: 'Nothing found with those search parameters' }] });
+            }
+            else {
+                return res.status(400).json({ errors: [{ msg: 'Nothing here yet' }] });
+            }
         }
         res.json(projects);
     }
