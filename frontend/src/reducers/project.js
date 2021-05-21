@@ -1,4 +1,4 @@
-import { GET_PROJECTS, GET_PROJECT, ADD_PROJECT, UPDATE_PROJECT, DELETE_PROJECT, PROJECT_ERROR } from '../actions/types';
+import { GET_PROJECTS, GET_PROJECT, ADD_PROJECT, UPDATE_PROJECT, DELETE_PROJECT, PROJECT_ERROR, CLEAR_PROJECTS } from '../actions/types';
 
 const initialState = {
 	projects: [],
@@ -45,8 +45,15 @@ export default function projectReducer(state = initialState, action) {
 			return {
 				...state,
 				projects: state.projects.map((project) =>
-					project._id === payload.id ? payload : project
+					project._id === payload._id ? payload : project
 				),
+				loading: false
+			};
+		case CLEAR_PROJECTS:
+			return {
+				...state,
+				projects: null,
+				project: null,
 				loading: false
 			};
 		default:

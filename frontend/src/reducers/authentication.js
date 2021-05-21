@@ -3,7 +3,7 @@ import { REGISTER_SUCCESS, FETCH_USER, AUTH_ERROR, LOGIN_SUCCESS, LOGOUT } from 
 const initialState = {
 	token: null,
 	isAuthenticated: null,
-	loading: true,
+	loading: false,
 	user: null
 }
 

@@ -12,7 +12,7 @@ export class PillButton extends Component {
 		}
 
 		return (
-			<a href={this.props.link} onClick={this.props.buttonClickEvent} className={`cursor-pointer leading-none mx-2 px-5 py-3 font-semibold transition-colors rounded-full ${style}`}>
+			<a href={this.props.link} onClick={this.props.buttonClickEvent} className={`cursor-pointer inline-block leading-none mx-2 px-5 py-3 font-semibold transition-colors rounded-full ${style}`}>
 				{this.props.children}
 			</a>
 		)

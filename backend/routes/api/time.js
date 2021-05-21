@@ -7,7 +7,7 @@ const Time = require('../../models/Time');
 const Project = require('../../models/Project');
 
 // @route   GET api/time
-// @desc    If the start and end dates are present, fetch time between range. Otherwise, fetch the latest 10 time chunks for a user. Format for dates must be YYYY-MM-DD format.
+// @desc    If the start and end dates are present, fetch time between range. Otherwise, fetch the latest 16 time chunks for a user. Format for dates must be YYYY-MM-DD format.
 // @access  Private
 router.get('/', auth, async (req, res) => {
     
@@ -91,16 +91,18 @@ router.get('/', auth, async (req, res) => {
         }
         else if (keywords) {
             times = await Time.find({ user: req.user.id, $text: {$search: keywords} })
-                .sort({endDate: 'desc'});
+                .sort({endDate: 'desc'})
+                .populate({ path: 'project', model: Project });
         } 
         else {
             times = await Time.find({ user: req.user.id })
                 .sort({endDate: 'desc'})
-                .limit(10);
+                .limit(16)
+                .populate({ path: 'project', model: Project });
         }
 
         if (!times || times.length < 1) {
-            return res.status(400).json({ errors: [{ msg: 'No time chunks found' }] });
+            return res.status(400).json({ errors: [{ msg: 'No time found with given parameters' }] });
         }
         res.json(times);
     }
@@ -115,7 +117,8 @@ router.get('/', auth, async (req, res) => {
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
     try {
-        const time = await Time.findById(req.params.id);
+        const time = await Time.findById(req.params.id)
+            .populate({ path: 'project', model: Project });;
 
         if (!time) {
             return res.status(400).json({ errors: [{ msg: 'Time does not exist' }] });

@@ -36,7 +36,7 @@ export class Alert extends Component {
 				alertColor = "bg-red-600";
 				break;
 			case "Warning":
-				alertColor = "bg-yellow-700";
+				alertColor = "bg-yellow-400";
 				break;
 			case "Success":
 				alertColor = "bg-green-700";

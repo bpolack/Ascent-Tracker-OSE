@@ -1,0 +1,14 @@
+.fc {
+	--fc-border-color: rgba(0, 0, 0, 0.25);
+	--fc-today-bg-color: rgba(156, 163, 175, 0.3);
+}
+.dark .fc {
+	--fc-border-color: rgba(255, 255, 255, 0.4);
+}
+.fc .fc-timegrid-slot-minor {
+    border-top-style: dashed!important;
+	border-top-color: rgba(0, 0, 0, 0.12);
+}
+.dark .fc .fc-timegrid-slot-minor {
+    border-top-color: rgba(255,255,255,0.12);
+}

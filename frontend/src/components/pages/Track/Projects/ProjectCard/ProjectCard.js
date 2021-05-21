@@ -13,12 +13,12 @@ export class ProjectCard extends Component {
 
 	handleEdit() {
 		const { _id } = this.props.project;
-		// Do a thing
+		this.props.openEditModal(_id);
 	}
 
 	handleDelete() {
 		const { _id } = this.props.project;
-		// Do a thing
+		this.props.openDeleteModal(_id);
 	}
 
 	render() {

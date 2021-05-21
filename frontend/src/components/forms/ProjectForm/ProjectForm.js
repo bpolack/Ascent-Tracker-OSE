@@ -18,9 +18,16 @@ export class ProjectForm extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	componentDidMount() {
-		// Load the project details if projectId is present
-		//this.props.getProject();
+	async componentDidMount() {
+		// Load the project details if projectId is present 
+		const { projectId } = this.props;
+		if (projectId) {
+			await this.props.getProject(projectId);
+			this.setState({
+				name: this.props.project.project.name,
+				desc: this.props.project.project.desc
+			});
+		}
 	}
 
 	handleChange(event) {
@@ -54,11 +61,11 @@ export class ProjectForm extends Component {
 			<form onSubmit={this.handleSubmit}>
 				<label className="block mb-3">
 					<span className="text-ascent-std">Project Name</span>
-					<input type="text" name="name" onChange={this.handleChange} className="form-ascent"  required />
+					<input type="text" name="name" onChange={this.handleChange} className="form-ascent" value={this.state.name} required />
 				</label>
 				<label className="block mb-3">
 					<span className="text-ascent-std">Description</span>
-					<textarea name="desc" onChange={this.handleChange} className="form-ascent h-32" />
+					<textarea name="desc" onChange={this.handleChange} className="form-ascent h-32" value={this.state.desc} />
 				</label>
 				<input className="cursor-pointer leading-none mx-2 px-5 py-3 font-semibold transition-colors rounded-full text-white bg-indigo-500 hover:bg-pink-500" type="submit" value={submitText} />
 			</form>

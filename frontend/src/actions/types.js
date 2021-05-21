@@ -1,6 +1,7 @@
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const CLEAR_ALERTS = 'CLEAR_ALERTS';
 // Focus
 export const SET_FOCUS = 'SET_FOCUS';
 // Login and Registration
@@ -18,4 +19,12 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const PROJECT_ERROR = 'PROJECT_ERROR';
+export const CLEAR_PROJECTS = 'CLEAR_PROJECTS';
 // Time
+export const GET_TIMES = 'GET_TIMES';
+export const GET_TIME = 'GET_TIME';
+export const ADD_TIME = 'ADD_TIME';
+export const UPDATE_TIME = 'UPDATE_TIME';
+export const DELETE_TIME = 'DELETE_TIME';
+export const TIME_ERROR = 'TIME_ERROR';
+export const CLEAR_TIME = 'CLEAR_TIME';
