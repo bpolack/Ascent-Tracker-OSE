@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getTimes, updateTime } from '../../../../../actions/time';
+import { getTimesRange, updateTime, clearUpdated } from '../../../../../actions/time';
 import './TimeCalendar.css';
 
 // Fullcalendar component and plugins
@@ -17,40 +17,82 @@ export class TimeCalendar extends Component {
 			events: []
 		};
 
-		this.handleEdit = this.handleEdit.bind(this);
+		this.handleDates = this.handleDates.bind(this);
+		this.handleEventClick = this.handleEventClick.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleDateClick = this.handleDateClick.bind(this);
 	}
 
 	componentDidMount() {
-		this.mapTimestoEvents()
+
 	}
 
+	// Re-map time to events after add new or remove time chunks
 	componentDidUpdate(prevProps) {
-		if(prevProps.time.times.length !== this.props.time.times.length) {
-			this.mapTimestoEvents()
+		try {
+			if (prevProps.time.times.length !== this.props.time.times.length) {
+				this.mapTimestoEvents();
+			}
+			else if (this.props.time.dataUpdated && prevProps.time.dataUpdated !== this.props.time.dataUpdated) {
+				this.mapTimestoEvents();
+				this.props.clearUpdated();
+			}
+		} catch (err) {
+			// times is null
+		}
+	}
+
+	// Runs every time the date range of the calendar changes
+	handleDates(rangeInfo) {
+		this.props.getTimesRange(rangeInfo.startStr, rangeInfo.endStr);
+		try {
+			if (this.props.time.times.length > 0) {
+				this.mapTimestoEvents();
+			}
+		} catch (err) {
+			// times is null
 		}
 	}
 
 	mapTimestoEvents() {
-		if(this.props.time.times && this.props.time.times.length > 0) {
+		if (this.props.time.times && this.props.time.times.length > 0) {
 			const { times } = this.props.time;
 			this.setState({
 				events: times.map(time => {
-							return {
-								id: time._id,
-								title: time.name,
-								start: new Date(time.startDate),
-								end: new Date(time.endDate)
-							};
-						})
+					return {
+						id: time._id,
+						title: time.name,
+						project: time.project ? time.project._id : '',
+						start: new Date(time.startDate),
+						end: new Date(time.endDate),
+						desc: time.desc,
+						refLink: time.refLink
+					};
+				})
 			});
 		}
 	}
 
-	handleEdit() {
-		const { _id } = this.props.time;
-		this.props.openEditModal(_id);
+	// Open edit modal when event is clicked
+	handleEventClick(clickInfo) {
+		this.props.openEditModal(clickInfo.event.id);
+	}
+
+	// Update event automatically when event is dragged or resized
+	handleEventChange = (changedInfo) => {
+
+		const updatedEvent = changedInfo.event.toPlainObject()
+
+		this.props.updateTime({ 
+			id: updatedEvent.id, 
+			name: updatedEvent.title, 
+			project: updatedEvent.extendedProps.project, 
+			startDate: updatedEvent.start, 
+			endDate: updatedEvent.end, 
+			desc: updatedEvent.extendedProps.desc, 
+			refLink: updatedEvent.extendedProps.refLink 
+		});
+		
 	}
 
 	handleDelete() {
@@ -62,10 +104,6 @@ export class TimeCalendar extends Component {
 		this.props.openNewModal(arg.dateStr);
 	}
 
-	// Data redux events into cal view
-	// Create specific getTimes with date range param
-	// Click event to open edit modal
-	// Drag and drop to update time (start and end datetime)
 	render() {
 		return (
 			<div>
@@ -73,12 +111,16 @@ export class TimeCalendar extends Component {
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="timeGridWeek"
 					headerToolbar={{
-						start: 'title', 
+						start: 'title',
 						center: 'timeGridDay,timeGridWeek,dayGridMonth',
-						end: 'today prev,next' 
+						end: 'today prev,next'
 					}}
 					allDaySlot={false}
+					editable={true}
 					events={this.state.events}
+					datesSet={this.handleDates}
+					eventClick={this.handleEventClick}
+					eventChange={this.handleEventChange} // called for drag-n-drop/resize
 					dateClick={this.handleDateClick}
 				/>
 			</div>
@@ -87,8 +129,9 @@ export class TimeCalendar extends Component {
 }
 
 TimeCalendar.propTypes = {
-	getTimes: PropTypes.func.isRequired,
+	getTimesRange: PropTypes.func.isRequired,
 	updateTime: PropTypes.func.isRequired,
+	clearUpdated: PropTypes.func.isRequired,
 	time: PropTypes.object.isRequired
 };
 
@@ -96,4 +139,4 @@ const mapStateToProps = (state) => ({
 	time: state.time
 });
 
-export default connect(mapStateToProps, { getTimes, updateTime })(TimeCalendar);
+export default connect(mapStateToProps, { getTimesRange, updateTime, clearUpdated })(TimeCalendar);

@@ -39,15 +39,18 @@ export class TimeForm extends Component {
 	async componentDidMount() {
 		// Load all the projects
 		await this.props.getProjects();
-		// Map projects to select options array
-		this.setState({
-			projectOptions: this.props.project.projects.map(project => {
-				return {
-					value: project._id,
-					label: project.name
-				};
-			})
-		});
+
+		if (this.props.project.projects) {
+			// Map projects to select options array
+			this.setState({
+				projectOptions: this.props.project.projects.map(project => {
+					return {
+						value: project._id,
+						label: project.name
+					};
+				})
+			});
+		}
 
 		// Load the time details if timeId is present 
 		const { timeId } = this.props;

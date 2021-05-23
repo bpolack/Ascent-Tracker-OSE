@@ -52,9 +52,10 @@ export default function projectReducer(state = initialState, action) {
 		case CLEAR_PROJECTS:
 			return {
 				...state,
-				projects: null,
+				projects: [],
 				project: null,
-				loading: false
+				loading: false,
+				error: {}
 			};
 		default:
 			return state;

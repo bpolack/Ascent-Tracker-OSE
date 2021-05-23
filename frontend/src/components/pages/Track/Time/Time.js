@@ -159,9 +159,9 @@ export class Time extends Component {
 	renderCalendar() {
 		return (
 			<TimeCalendar 
-				openNewModal={this.openNewModal}
-				openEditModal={this.openEditModal}
-				openDeleteModal={this.openDeleteModal}
+				openNewModal={this.openNewModal} 
+				openEditModal={this.openEditModal} 
+				openDeleteModal={this.openDeleteModal} 
 			/>
 		)
 

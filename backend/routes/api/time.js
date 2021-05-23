@@ -7,7 +7,10 @@ const Time = require('../../models/Time');
 const Project = require('../../models/Project');
 
 // @route   GET api/time
-// @desc    If the start and end dates are present, fetch time between range. Otherwise, fetch the latest 16 time chunks for a user. Format for dates must be YYYY-MM-DD format.
+// @desc    If the start and end dates are present, fetch time between range. 
+//          Otherwise, fetch the latest 16 time chunks for a user. Format for 
+//          dates should be ISO8601 string representation with optional timezone offset 
+//          ( ex: 2018-09-01T12:30:00-05:00 ).
 // @access  Private
 router.get('/', auth, async (req, res) => {
     

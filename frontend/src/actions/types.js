@@ -28,3 +28,4 @@ export const UPDATE_TIME = 'UPDATE_TIME';
 export const DELETE_TIME = 'DELETE_TIME';
 export const TIME_ERROR = 'TIME_ERROR';
 export const CLEAR_TIME = 'CLEAR_TIME';
+export const CLEAR_UPDATE = 'CLEAR_UPDATE';

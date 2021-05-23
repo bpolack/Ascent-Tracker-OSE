@@ -49,10 +49,12 @@ export const addProject = formData => async dispatch => {
 
 		dispatch(setAlert('New Project Added', 'Success'));
 	} catch (err) {
-		dispatch({
-			type: PROJECT_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
-		});
+		if (err.response) {
+			dispatch({
+				type: PROJECT_ERROR,
+				payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
+			});
+		}
 	}
 };
 

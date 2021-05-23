@@ -1,11 +1,30 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_TIMES, GET_TIME, ADD_TIME, UPDATE_TIME, DELETE_TIME, TIME_ERROR } from './types';
+import { GET_TIMES, GET_TIME, ADD_TIME, UPDATE_TIME, DELETE_TIME, TIME_ERROR, CLEAR_UPDATE } from './types';
 
 // Get Times (plural) - limited to 16 latest entries
 export const getTimes = () => async dispatch => {
 	try {
 		const res = await api.get('/time');
+
+		dispatch({
+			type: GET_TIMES,
+			payload: res.data
+		});
+	} catch (err) {
+
+		dispatch({
+			type: TIME_ERROR,
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
+		});
+	}
+};
+
+// Get Times (plural) - between provided date range (in string format)
+export const getTimesRange = (startDate, endDate) => async dispatch => {
+	try {
+
+		const res = await api.get('/time', { params: { start: startDate, end: endDate } });
 
 		dispatch({
 			type: GET_TIMES,
@@ -50,14 +69,12 @@ export const addTime = formData => async dispatch => {
 
 		dispatch(setAlert('New Time Added', 'Success'));
 	} catch (err) {
-
-		console.log(err);
-		console.log(err.response);
-
-		dispatch({
-			type: TIME_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
-		});
+		if (err.response) {
+			dispatch({
+				type: TIME_ERROR,
+				payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
+			});
+		}
 	}
 };
 
@@ -71,7 +88,21 @@ export const updateTime = formData => async dispatch => {
 			payload: res.data
 		});
 
-		dispatch(setAlert('Time Updated', 'Success'));
+	} catch (err) {
+		dispatch({
+			type: TIME_ERROR,
+			payload: { msg: err.response.statusText, status: err.response.status, errors: err.response.data.errors }
+		});
+	}
+};
+
+// Clear updated time state (new data has mapped to calendar)
+export const clearUpdated = () => async dispatch => {
+	try {
+		dispatch({
+			type: CLEAR_UPDATE
+		});
+
 	} catch (err) {
 		dispatch({
 			type: TIME_ERROR,
