@@ -5,6 +5,9 @@ React / Redux / Express / MongoDB
 ## Description
 Simple time tracking for freelancers and consultants. Keep better track of your time and budgets for small projects and small teams.
 
+Live demo of the project can be found running on the following Heroku instance:
+https://secret-wildwood-01713.herokuapp.com/
+
 ## Run in Dev Mode
 Prior to running the application, a valid MongoDB instance is required for use. It's reccommended that MongoDB Atlas is used to host a cloud based instance of the database. Once a valid database instance is created, users may add their database information to a file ".env" in the primary backend folder. A sample of this file is included ".env-sample".
 
@@ -16,6 +19,8 @@ npm run dev
 
 ## Recommendations for Deployment
 It is recommended that the backend api be deployed to Heroku for serving requests. The frontend React application may be compiled and hosted via any regular web server - HOWEVER, it should be noted that the frontend can also be deployed to Heroku simultaneously if desired. 
+
+For ease of deployment, the frontend application has been moved into the backend folder. This way, the backend and frontend can be pushed directly to a single Heroku app. Using Git, simply push the entire application, from within the "backend" folder, to a valid Heroku instance. Ensure your .env file contains the correct database connector.
 
 ## Roadmap
 
@@ -48,7 +53,7 @@ Recommended easy deployment on Heroku + Mongo Atlas
 ## REST API Documentation
 
 Backend API documentation is described at the following link:
-
+https://documenter.getpostman.com/view/13141511/TzeRqqvL
 
 ## Built With
 

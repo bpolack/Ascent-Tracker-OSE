@@ -1,0 +1,6 @@
+.react-select-override [type='text']:focus {
+	box-shadow: none!important;
+}
+.react-datetime-picker__wrapper {
+    border: 0;
+}
