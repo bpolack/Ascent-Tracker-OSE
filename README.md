@@ -15,7 +15,7 @@ npm run dev
 ```
 
 ## Recommendations for Deployment
-It is recommended that the backend api be deployed to Heroku for serving requests. The frontend React application may be compiled and hosted via any regular web server. 
+It is recommended that the backend api be deployed to Heroku for serving requests. The frontend React application may be compiled and hosted via any regular web server - HOWEVER, it should be noted that the frontend can also be deployed to Heroku simultaneously if desired. 
 
 ## Roadmap
 

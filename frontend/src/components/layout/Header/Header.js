@@ -80,7 +80,7 @@ export class Header extends Component {
 						</button>
 					</div>
 					<div className="w-full flex-grow hidden lg:flex lg:items-center lg:justify-end lg:w-auto">
-						<a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 font-bold text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
+						<a href="https://github.com/bpolack/Ascent-Tracker-OSE" target="_blank" rel="noreferrer" className="block mt-4 lg:inline-block lg:mt-0 font-bold text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
 						{this.renderProfile()}
 						<div className="mr-5 text-ascent-std"> - </div>
 						<a href="/track/projects" className="block mt-4 lg:inline-block lg:mt-0 font-bold text-ascent-std hover:text-pink-500 mr-5"><FontAwesomeIcon className="mr-1" icon={faFolderOpen} /> Projects</a>
@@ -101,7 +101,7 @@ export class Header extends Component {
 							<div className="block my-6 -mx-2" >
 								{this.renderLogin()}
 							</div>
-							<a href="#responsive-header" className="block my-6 font-bold text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
+							<a href="https://github.com/bpolack/Ascent-Tracker-OSE" target="_blank" rel="noreferrer" className="block my-6 font-bold text-ascent-std hover:text-pink-500 mr-5">Documentation</a>
 							{this.renderProfile()}
 							<a href="/track/projects" className="block mt-6 font-bold text-ascent-std hover:text-pink-500 mr-5"><FontAwesomeIcon className="mr-1" icon={faFolderOpen} /> Track Projects</a>
 							<a href="/track/time" className="block mt-6 font-bold text-ascent-std hover:text-pink-500 mr-5"><FontAwesomeIcon className="mr-1" icon={faClock} /> Track Time</a>
