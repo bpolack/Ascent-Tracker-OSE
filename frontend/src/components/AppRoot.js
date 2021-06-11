@@ -11,7 +11,7 @@ import Routes from './pages/Routes';
 import AlertContainer from './layout/AlertContainer/AlertContainer';
 import Footer from './layout/Footer/Footer';
 
-const AppRoot = (props) => {
+export const AppRoot = (props) => {
 
 	return (
 		<Router>

@@ -62,7 +62,7 @@ export class Alert extends Component {
 						<strong><span>{this.props.alertType}</span></strong>
 					</div>
 					<div>{this.props.msg}</div>
-					<div className="absolute top-1 right-2 cursor-pointer hover:opacity-70" onClick={this.handleDismiss} >
+					<div className="alert-dismiss-button absolute top-1 right-2 cursor-pointer hover:opacity-70" onClick={this.handleDismiss} >
 						<FontAwesomeIcon icon={faTimes} />
 					</div>
 				</div>
